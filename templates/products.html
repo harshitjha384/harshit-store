@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+  <title>All Products — Harshit Store</title>
+</head>
+<body>
+
+  <!-- Navbar (kept consistent with homepage) -->
+  <div class="navbar">
+    <h1 class="logo">🛍️ Harshit Store</h1>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/orders">Orders</a>
+        <a href="/cart">Cart</a>
+        <a href="/chatbot">Chatbot</a>
+        <!-- <a href="/logout">Logout</a> -->
+    </div>
+</div>
+
+  <section class="hb-products-page">
+
+    <div class="hb-products-head">
+      <span class="hb-eyebrow"><span class="hb-eyebrow-dot"></span> Catalog</span>
+      <h1 class="hb-products-title">All products</h1>
+    </div>
+
+    {% if not grouped %}
+      <p class="hb-no-results">No products available right now.</p>
+    {% endif %}
+
+    {% for category, items in grouped.items() %}
+      <div class="hb-category-section" id="cat-{{ category }}">
+        <div class="hb-category-section-head">
+          <h2 class="hb-category-section-title">{{ category }}</h2>
+          <span class="hb-category-count">{{ items|length }} items</span>
+        </div>
+
+        <div class="hb-product-grid">
+          {% for product in items %}
+            <div class="hb-pgrid-card {% if product.stock == 0 %}hb-pgrid-outofstock{% endif %}">
+              <div class="hb-perid-media">
+              <a href="{{ url_for('product_details', product_id=product.id) }}">
+                  <img src="{{ product.image }}" alt="{{ product.name }}">
+              </a>
+              </div>
+              <div class="hb-pgrid-body">
+                <h3 class="hb-pgrid-name">{{ product.name }}</h3>
+                <p class="hb-pgrid-price">₹{{ "%.2f"|format(product.price) }}</p>
+
+                {% if product.stock > 0 %}
+                  <div class="hb-pgrid-actions">
+                    <form action="{{url_for('product_action',product_id=product.id)}}" method="post" class="hb-pgrid-form">
+                  <input type="hidden" name="quantity" value="1">
+                  <button class="hb-pgrid-buy" type="submit" name="action" value="buy">Buy Now</button>
+               
+                <button type="submit" name="action" value="cart" class="hb-pgrid-add"> Add to Cart</button>
+                </form>
+                  </div>
+                {% else %}
+                  <button class="hb-pgrid-add hb-pgrid-disabled" disabled>Out of stock</button>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+  </section>
+
+  <script>
+    document.querySelectorAll('.hb-pgrid-add:not(.hb-pgrid-disabled)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        // TODO: wire this to your existing add-to-cart endpoint, e.g.:
+        // fetch('/add_to_cart/' + id, { method: 'POST' })
+        console.log('Add to cart:', id);
+      });
+    });
+
+    document.querySelectorAll('.hb-pgrid-buy').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        // TODO: wire this to add-to-cart then redirect to checkout, e.g.:
+        // fetch('/add_to_cart/' + id, { method: 'POST' }).then(() => window.location.href = '/checkout');
+        console.log('Buy now:', id);
+      });
+    });
+  </script>
+
+</body>
+</html>

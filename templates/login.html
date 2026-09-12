@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="auth-container">
+        <form class="auth-form" method="POST" action="/login">
+            <h2>Login</h2>
+     
+            <input type="text" name="username" placeholder="Enter username">
+            <br><br>
+            <input type="password" name="password" placeholder="enter your password">
+            <br><br>
+            <button type="submit">Login</button>
+            <p class="auth-link">
+               Don't have an account?
+               <a href="/register">Register</a>
+           </p>
+       </form>
+    </div>
+    
+</body>
+</html>
+       
+
+    

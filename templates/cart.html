@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+    <h1 class="logo">🛍️ Harshit Store</h1>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/orders">Orders</a>
+        <a href="/chatbot">Chatbot</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="cart-container">
+    <h1>🛒 My Cart</h1>
+    {% if items %}
+    <div class="cart-items">
+        {% for item in items %}
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <img src="{{item[5]}}" alt="{{item[2]}}" class="cart-image">
+                <h3>{{ item[3] }}</h3>
+                <div class="qty-control" data-cart-id="{{ item[0] }}">
+                    <p>Quantity:
+                        <a href="javascript:void(0)" class="cart-price qty-minus">-</a>
+                        <span class="qty-value">{{ item[6] }}</span>
+                        <a href="javascript:void(0)" class="cart-price qty-plus">+</a> 
+                    </p>
+                   
+               </div>
+               <p class="cart-price item-total" data-unit-price="{{ item[4] }}">₹{{ item[4]*item[6] }}</p>
+            </div>
+            <div class="btn1-buy">
+            <a href="{{url_for('remove_from_cart',cart_id=item[0])}}" class="btn-remove">Remove from cart</a>
+            {% if item[6] >item[7] %}
+               <button class="btn-buy" type="submit" name="action" value="buy">❌ Out of Stock</button>
+            {% else %}   
+               <form action="{{url_for('product_action',product_id=item[2])}}" method="post">
+                  <input type="hidden" name="quantity" value="{{item[6]}}">
+                  <button class="btn-buy" type="submit" name="action" value="buy">Buy Now</button>
+               </form>
+            {% endif %}
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="/" class="continue-btn">Continue Shopping</a>
+    {% else %}
+    <div class="empty-cart">
+        <h2>🛒 Your cart is empty!</h2>
+        <a href="/" class="continue-btn">Shop Now</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+setTimeout(function () {
+    document.querySelectorAll('.flash').forEach(msg => {
+        msg.style.display = 'none';
+    });
+}, 3000);
+</script>
+<script>
+document.querySelectorAll('.qty-control').forEach(wrapper => {
+  const cartId = wrapper.dataset.cartId;
+  const minusBtn = wrapper.querySelector('.qty-minus');
+  const plusBtn = wrapper.querySelector('.qty-plus');
+  const qtyValue = wrapper.querySelector('.qty-value');
+  const totalEl = wrapper.closest('.cart-item-info').querySelector('.item-total');
+  const unitPrice = parseFloat(totalEl.dataset.unitPrice);
+
+  function showTempMessage(text) {
+    let msg = wrapper.querySelector('.qty-msg');
+    if (!msg) {
+      msg = document.createElement('span');
+      msg.className = 'qty-msg';
+      wrapper.appendChild(msg);
+    }
+    msg.textContent = text;
+    msg.style.display = 'inline';
+    setTimeout(() => { msg.style.display = 'none'; }, 2000);
+  }
+
+  function handleResponse(data) {
+    qtyValue.textContent = data.quantity;
+    totalEl.textContent = '₹' + (unitPrice * data.quantity);
+
+    const buyForm = wrapper.closest('.cart-item').querySelector('form');
+    const quantityInput = buyForm.querySelector('input[name="quantity"]');
+
+    quantityInput.value = data.quantity;
+
+    if (data.max_reached) showTempMessage('Max stock reached');
+    if (data.min_reached) showTempMessage('Minimum quantity is 1');
+}
+
+  plusBtn.addEventListener('click', () => {
+    fetch(`/increase_quantity/${cartId}`)
+      .then(res => res.json())
+      .then(handleResponse)
+      .catch(err => console.error('Increase failed:', err));
+  });
+
+  minusBtn.addEventListener('click', () => {
+    fetch(`/decrease_quantity/${cartId}`)
+      .then(res => res.json())
+      .then(handleResponse)
+      .catch(err => console.error('Decrease failed:', err));
+  });
+});
+document.querySelectorAll('.btn-remove').forEach(button => {
+
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const removeUrl = this.href;
+        const cartItem = this.closest('.cart-item');
+
+        fetch(removeUrl)
+            .then(response => {
+                if (response.ok) {
+                    cartItem.remove();
+                }
+            })
+            .catch(error => {
+                console.error('Remove failed:', error);
+            });
+    });
+
+});
+</script>
+</body>
+</html>

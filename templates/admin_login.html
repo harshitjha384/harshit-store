@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin_login.css')}}">
+    <title>Admin login</title>
+</head>
+<body>
+    <div class="auth-container1">
+        <form class="auth-form1" method="POST" action="{{url_for('admin')}}">
+            <h2>Admin Login</h2>
+     
+            <input type="text" name="username" placeholder="Enter username">
+            <br><br>
+            <input type="password" name="password" placeholder="enter your password">
+            <br><br>
+            <button type="submit">Login</button>
+</body>
+</html>

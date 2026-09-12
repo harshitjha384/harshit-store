@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/order.css') }}">
+    <title>My Orders</title>
+</head>
+<body>
+   <div class="navbar">
+    <h1 class="logo">🛍️ Harshit Store</h1>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/orders">Orders</a>
+        <a href="/cart">Cart</a>
+        <a href="/chatbot">Chatbot</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+    <div class="orders-section">
+
+
+    <div class="orders-container">
+
+        {% for item in orders %}
+     <div class="order-card">
+
+    <div class="order-image">
+        <img src="{{ item[5] }}" alt="{{ item[2] }}">
+    </div>
+
+    <div class="order-details">
+
+        <div class="order-header">
+            <h4 class="order-id">📦 Order #{{ item[0] + 1000 }}</h4>
+
+            <span class="status {{ item[12]|lower }}">
+                {{ item[12] }}
+            </span>
+        </div>
+
+        <h3 class="product-name">{{ item[2] }}</h3>
+
+        <p class="order-price">
+            ₹{{ item[3] * item[13] }}
+        </p>
+
+        <p class="order-quantity">
+            Quantity: {{ item[13] }}
+        </p>
+
+        <div class="order-info">
+
+            <div>
+                <strong>💳 Payment</strong>
+                <p>{{ item[11] }}</p>
+            </div>
+
+            <div>
+                <strong>📍 Deliver to</strong>
+                <p>
+                    {{ item[6] }}<br>
+                    {{ item[7] }}, {{ item[9] }}<br>
+                    {{ item[10] }}
+                </p>
+            </div>
+
+        </div>
+
+        <p class="order-date">
+            📅 Ordered on: {{ item[4] }}
+        </p>
+
+        {% if item[12] == "Pending" or item[12] == "Confirmed" %}
+
+        <a href="{{ url_for('cancel_order', order_id=item[0]) }}"
+           class="cancel-btn"
+           onclick="return confirm('Are you sure you want to cancel this order?')">
+
+            🗑️ Cancel Order
+        </a>
+
+        {% elif item[12] == "Delivered" %}
+
+            <p class="order-message delivered-msg">
+                📦 Order Delivered
+            </p>
+
+        {% elif item[12] == "Cancelled" %}
+
+            <p class="order-message cancelled-msg">
+                ❌ Order Cancelled
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+        {% endfor %}
+
+    </div>
+
+</div>

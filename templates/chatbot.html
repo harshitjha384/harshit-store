@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>Harshit Store Assistant</title>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="chat-header">
+        <div class="bot-icon">🤖</div>
+        <div>
+            <h2>Harshit Store Assistant</h2>
+            <span>Online • Ready to help</span>
+        </div>
+    </div>
+
+    <div class="chat-body">
+
+        <div class="bot-message">
+            👋 Hello! How can I help you with Harshit Store?
+        </div>
+        {% if user_message %}
+        <div class="user-message">
+            {{user_message}}
+        </div>
+        {% endif %}
+        
+        {% if response %}
+        <div class="bot-message">
+            {{ response|safe }}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <form method="POST"
+          action="/chatbot"
+          class="chat-input">
+
+        <input
+            type="text"
+            name="message"
+            placeholder="Ask anything about products..."
+            required>
+
+        <button type="submit">➤</button>
+
+    </form>
+
+    <a href="/" class="back-btn">← Back to Store</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/checkout.css') }}">
+
+    <title>Checkout - Harshit Store</title>
+</head>
+
+<body>
+
+<div class="checkout-container">
+
+    <!-- LEFT SIDE -->
+    <div class="checkout-left">
+
+        <h1>Checkout</h1>
+
+        <div class="checkout-box">
+
+            <h2>📍 Delivery Address</h2>
+
+            <form action="{{ url_for('checkout', product_id=product[0]) }}"
+                  class="address"
+                  method="POST">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text"
+                               name="name"
+                               placeholder="Enter your name"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text"
+                               name="phone"
+                               placeholder="Enter your number"
+                               required>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label>Address</label>
+
+                    <textarea name="address"
+                              rows="3"
+                              placeholder="Enter your full address"
+                              required></textarea>
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label>City</label>
+
+                        <input type="text"
+                               name="city"
+                               placeholder="Enter your city"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>State</label>
+
+                        <input type="text"
+                               name="state"
+                               placeholder="Enter your state"
+                               required>
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label>Pincode</label>
+
+                    <input type="text"
+                           name="pincode"
+                           placeholder="Enter your pincode"
+                           required>
+                </div>
+
+
+                <input type="hidden"
+                       name="quantity"
+                       value="{{ quantity }}">
+
+
+                <!-- PAYMENT -->
+
+                <div class="payment-section">
+
+                    <h2>💳 Payment Method</h2>
+
+                    <label class="payment-option">
+                        <input type="radio"
+                               name="payment"
+                               value="COD"
+                               checked>
+                        Cash on Delivery
+                    </label>
+
+                    <label class="payment-option disabled">
+                        <input type="radio"
+                               name="payment"
+                               value="UPI"
+                               disabled>
+                        UPI <span>(Coming Soon)</span>
+                    </label>
+
+                    <label class="payment-option disabled">
+                        <input type="radio"
+                               name="payment"
+                               value="CARD"
+                               disabled>
+                        Debit/Credit Card <span>(Coming Soon)</span>
+                    </label>
+
+                </div>
+
+
+                <button type="submit"
+                        class="place-order-btn">
+                    🛍️ Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE : PRODUCT SUMMARY -->
+
+    <div class="checkout-right">
+
+        <h2>🛒 Order Summary</h2>
+
+        <div class="cart-items">
+
+            <div class="cart-item">
+
+                <img src="{{ product[5] }}"
+                     alt="{{ product[2] }}"
+                     class="cart-image">
+
+                <div class="cart-item-info">
+
+                    <h3>{{ product[2] }}</h3>
+
+                    <p class="cart-price">
+                        ₹{{ product[3] }}
+                    </p>
+
+                    <p class="cart-quantity">
+                        Quantity: {{ quantity }}
+                    </p>
+                    <p class="cart-total">
+                        Total: ₹{{product[3] *quantity}} 
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+            

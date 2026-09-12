@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Harshit Store</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            🛍️ Harshit Store
+        </div>
+
+        <form action="{{ url_for('products') }}" method="GET" class="search-form">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search products..."
+        value="{{ request.args.get('search', '') }}"
+    >
+
+    <button type="submit">🔍</button>
+
+</form>
+
+        <div class="nav-links" id="navLinks">
+            
+            <a href="/cart">Cart</a>
+            <a href="/chatbot">chatbot</a>
+
+            {% if session.get('user') %}
+            <a href="/orders">Orders</a>
+            <a href="/logout">Logout</a>
+
+            {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+
+            {% endif %}
+        </div>
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    </nav>
+
+    <section class="hb-hero">
+  <div class="hb-hero-inner">
+    <div class="hb-hero-copy">
+      <span class="eyebrow"><span class="eyebrow-dot"></span> Mega Sale 2026</span>
+      <h1 class="hb-hero-title">Premium tech,<br>priced for <span>everyone.</span></h1>
+      <p class="hb-hero-sub">
+        Phones, laptops, and audio from brands you trust — with free
+        delivery and easy returns on every order.
+      </p>
+      <div class="hb-hero-actions">
+        <a href="/products"><button class="btn-primary" type="submit" >Shop the sale</button></a>
+        <a class="btn-link" href="#categories">Browse categories →</a>
+      </div>
+      <div class="hb-hero-stats">
+        <div>
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Orders delivered</div>
+        </div>
+        <div>
+          <div class="stat-num">4.8/5</div>
+          <div class="stat-label">Customer rating</div>
+        </div>
+        <div>
+          <div class="stat-num">24h</div>
+          <div class="stat-label">Delivery in metro cities</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hb-hero-visual">
+      <div class="hb-glow"></div>
+     <div class="hb-product-card" id="hbSlider">
+  <div class="hb-slide active">
+    <img src="https://tse1.mm.bing.net/th/id/OIP.f8A2G-RZpD3FtTDwZctTEAHaKX?cb=thfc1falcon4&rs=1&pid=ImgDetMain&o=7&rm=3" alt="iPhone 16">
+    <div class="hb-badge hb-badge-price">₹60,000.00<small>iPhone 16</small></div>
+    <div class="hb-badge hb-badge-rating">⭐ 4.9</div>
+  </div>
+
+  <div class="hb-slide">
+    <img src="https://resetlab.co.za/wp-content/uploads/2022/09/IMG_8739-scaled.jpg" alt="MacBook Air">
+    <div class="hb-badge hb-badge-price">₹60,000.00<small>MacBook Air</small></div>
+    <div class="hb-badge hb-badge-rating">⭐ 4.7</div>
+  </div>
+
+  <div class="hb-slide">
+    <img src="https://thf.bing.com/th/id/OIP.I-jA8QbmgGaW9wrpNvLNFAHaHa?w=183&h=183&c=7&r=0&o=7&cb=thfc1falcon4&dpr=1.3&pid=1.7&rm=3" alt="Boat Airbuds">
+    <div class="hb-badge hb-badge-price">₹2,000.00<small>Boat Airbuds</small></div>
+    <div class="hb-badge hb-badge-rating">⭐ 4.5</div>
+  </div>
+
+  <button class="hb-slide-arrow hb-slide-prev" aria-label="Previous product">‹</button>
+  <button class="hb-slide-arrow hb-slide-next" aria-label="Next product">›</button>
+
+  <div class="hb-slide-dots">
+    <button class="hb-dot active" aria-label="Show iPhone 16"></button>
+    <button class="hb-dot" aria-label="Show MacBook Air"></button>
+    <button class="hb-dot" aria-label="Show Boat Airbuds"></button>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+    <section id="categories" class="hb-categories">
+  <div class="hb-categories-head">
+    <div>
+      <span class="hb-eyebrow"><span class="hb-eyebrow-dot"></span> Browse</span>
+      <h2 class="hb-categories-title">Shop by category</h2>
+    </div>
+    <a href="/products" class="hb-btn-link">View all →</a>
+  </div>
+
+  <div class="hb-category-grid">
+    <a class="hb-category-card" href="/products#cat-Mobiles">
+      <img src="https://static.vecteezy.com/system/resources/previews/051/338/557/large_2x/various-colorful-smartphones-in-a-row-isolated-on-a-transparent-background-free-png.png" alt="Mobiles">
+      <span class="hb-category-label">Mobiles</span>
+    </a>
+    <a class="hb-category-card" href="/products#cat-Laptops">
+      <img src="https://wallpapers.com/images/featured/laptop-murjp1nk4lp1idlt.jpg" alt="Laptops">
+      <span class="hb-category-label">Laptops</span>
+    </a>
+    <a class="hb-category-card" href="/products#cat-Headphones">
+      <img src="https://www.bing.com/th/id/OIP.qMnKupYMJvmaLZEtlxuF6AHaHa?w=193&h=193&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=ImgAns&rm=2" alt="Headphones">
+      <span class="hb-category-label">Headphones</span>
+    </a>
+    <a class="hb-category-card" href="#">
+      <img src="https://static.vecteezy.com/system/resources/previews/007/483/936/large_2x/white-smartphone-charger-on-the-black-background-smartphone-charging-electronic-device-free-photo.jpeg" alt="Chargers">
+      <span class="hb-category-label">Chargers</span>
+    </a>
+  </div>
+</section>
+<section class="hb-story">
+  <div class="hb-story-inner">
+    <div class="hb-story-media">
+      <img src="static\images\myStory.img.jpeg" alt="Harshit Store team or workspace">
+      <div class="hb-badge hb-story-badge">
+        <strong>3+ yrs</strong>
+        <small>Serving customers online</small>
+      </div>
+    </div>
+
+    <div class="hb-story-copy">
+      <span class="hb-eyebrow"><span class="hb-eyebrow-dot"></span> Our story</span>
+      <h2 class="hb-story-title">Built by someone who buys tech too.</h2>
+      <p class="hb-story-text">
+        Harshit Store started as a way to get genuine devices at fair prices,
+        without the markup or the guesswork. Every product listed here is
+        one we'd actually recommend to a friend.
+      </p>
+      <p class="hb-story-text">
+        No inflated MRPs, no fake urgency — just clear pricing, real stock,
+        and support that actually replies.
+      </p>
+      <a href="/products" class="hb-btn-primary-link">Explore all products →</a>
+    </div>
+  </div>
+</section>
+
+    <!-- <section class="featured" id="Products">
+        <h2>Featured Products</h2>
+        <div class="Product-container">
+            {% for product in products  %}
+            <div class="product-card">
+                <a href="{{url_for('product_details',product_id=product[0])}}"><img src="{{product[5]}}" alt="{{product[1]}}"></a>
+                <h3>{{product[2]}}</h3>
+                <p class="price">₹{{product[3]}}</p>
+
+                {% if session.get('user') %}
+
+                    {% if product[6] > 0 %}
+                    <form action="{{url_for('product_action',product_id=product[0])}}" method="post">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" name="action" value="cart">Add to Cart</button>
+                        <button class="buy-btn" type="submit" name="action" value="buy">Buy Now</button>
+                    </form>
+                       
+                       
+                    {% else %}
+                        <button class="buy-btn" disabled>❌ Out of Stock</button>
+                    {% endif %}      
+                {% else %}
+
+                <a href="/login"><button>Add to cart</button></a>
+                
+                {% endif %}
+                
+            </div>
+            {% endfor %}
+        </div>
+
+    </section> -->
+
+   <footer class="footer">
+    <div class="footer-content">
+
+        <div class="footer-left">
+            <h3>🛍️ Harshit Store</h3>
+            <p>Your trusted online shopping destination.</p>
+        </div>
+
+        <div class="footer-center">
+            <p>📧 support@harshitstore.com</p>
+            <p>📞 +91 XXXXX XXXXX</p>
+        </div>
+
+        <div class="footer-right">
+            <a href="https://www.facebook.com/harshit.jha.7902">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <p class="copyright">
+        © 2026 Harshit Store. All Rights Reserved.
+    </p>
+</footer>
+
+
+<script>
+(function () {
+  const slider = document.getElementById('hbSlider');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.hb-slide');
+  const dots = slider.querySelectorAll('.hb-dot');
+  const prevBtn = slider.querySelector('.hb-slide-prev');
+  const nextBtn = slider.querySelector('.hb-slide-next');
+  let current = 0;
+  let autoplayId = null;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+  const next = () => goTo(current + 1);
+  const prev = () => goTo(current - 1);
+
+  function start() {
+    if (reducedMotion) return;
+    stop();
+    autoplayId = setInterval(next, 4000);
+  }
+  function stop() { if (autoplayId) clearInterval(autoplayId); }
+
+  nextBtn.addEventListener('click', () => { next(); start(); });
+  prevBtn.addEventListener('click', () => { prev(); start(); });
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { goTo(i); start(); }));
+
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; stop(); }, { passive: true });
+  slider.addEventListener('touchend', e => {
+    const delta = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(delta) > 40) (delta > 0 ? prev() : next());
+    start();
+  }, { passive: true });
+
+  start();
+})();
+</script>
+        
+</body>
+</html>

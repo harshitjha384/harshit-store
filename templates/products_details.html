@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product[2] }}</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style2.css') }}">
+</head>
+<body>
+
+<div class="product-container">
+
+    <div class="product-image">
+        <img src="{{ product.image }}" alt="{{ product[2] }}">
+    </div>
+
+    <div class="product-info">
+
+        <h1>{{ product.name }}</h1>
+
+        <h2 class="price">₹{{ product.price }}</h2>
+
+        <p class="description">
+            {{ product.description }}
+        </p>
+
+        {% if product.stock > 0 %}
+
+            <p class="stock in-stock">
+                ✅ In Stock ({{ product.stock }} Available)
+            </p>
+
+            
+
+            <div class="buttons">
+
+<form action="{{ url_for('product_action', product_id=product.id) }}" method="POST" class="cart-form">
+
+    <div class="quantity-box">
+
+        <label>Quantity</label>
+
+        <button type="button" onclick="decrease()">-</button>
+
+        <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value="1"
+            min="1"
+            max="{{ product.stock }}"
+            readonly>
+
+        <button type="button" onclick="increase()">+</button>
+
+    </div>
+
+    <button
+        type="submit"
+        name="action"
+        value="cart"
+        class="cart-btn">
+
+        Add to Cart
+
+    </button>
+     
+    
+    <button
+        type="submit"
+        name="action"
+        value="buy"
+        class="buy-btn">
+
+        Buy Now
+
+    </button>
+
+</form>
+
+</div>
+    
+            {% else %}
+    
+                <p class="stock out-stock">
+                    ❌ Out of Stock
+                </p>
+    
+                <div class="buttons">
+    
+                    <button class="cart-btn" disabled>
+                        Add to Cart
+                    </button>
+    
+                    <button class="buy-btn" disabled>
+                        Buy Now
+                    </button>
+    
+                </div>
+    
+            {% endif %}
+    
+        </div>
+    
+    </div>
+    <script>
+    
+    
+    
+    function increase(){
+    
+        let qty=document.getElementById("quantity");
+        let max=parseInt(qty.max);
+    
+        if(parseInt(qty.value)<max){
+            qty.value=parseInt(qty.value)+1;
+            updateHiddenQuantity();
+        }
+    
+    }
+    
+    function decrease(){
+    
+        let qty=document.getElementById("quantity");
+    
+        if(parseInt(qty.value)>1){
+            qty.value=parseInt(qty.value)-1;
+            updateHiddenQuantity();
+        }
+    
+    }
+    
+    </script>
+    </body>
+    </html>
+
+
+               
+
+            

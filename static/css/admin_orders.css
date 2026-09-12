@@ -1,0 +1,207 @@
+/* =========================
+   Admin Orders Page
+   ========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
+    padding: 35px 25px;
+}
+
+/* Page heading */
+
+h2 {
+    max-width: 1400px;
+    margin: 0 auto 25px;
+    font-size: 28px;
+    color: #0f172a;
+}
+
+/* Table wrapper */
+
+table {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Table header */
+
+thead {
+    background: #0f172a;
+    color: white;
+}
+
+th {
+    padding: 15px 12px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Table cells */
+
+td {
+    padding: 13px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* Row hover */
+
+tbody tr {
+    transition: 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* Product image */
+
+td img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 5px;
+}
+
+/* Address */
+
+td:nth-child(6) {
+    min-width: 180px;
+    line-height: 1.5;
+}
+
+/* Price */
+
+td:nth-child(8) {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Status */
+
+td:nth-child(10) {
+    font-weight: 600;
+}
+
+/* Update form */
+
+td form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Select */
+
+select {
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    background: white;
+    color: #334155;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+
+select:focus {
+    border-color: #2563eb;
+}
+
+/* Save button */
+
+button {
+    padding: 8px 13px;
+    border: none;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   Mobile Responsive
+   ========================= */
+
+@media (max-width: 900px) {
+
+    body {
+        padding: 25px 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        padding: 12px 10px;
+    }
+
+    td img {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* Small phones */
+
+@media (max-width: 500px) {
+
+    body {
+        padding: 20px 10px;
+    }
+
+    h2 {
+        font-size: 22px;
+        margin-bottom: 18px;
+    }
+
+    th {
+        font-size: 13px;
+    }
+
+    td {
+        font-size: 13px;
+    }
+
+    select {
+        padding: 7px;
+    }
+
+    button {
+        padding: 7px 10px;
+    }
+}
