@@ -11,11 +11,12 @@ client=genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 app=Flask(__name__)
 app.secret_key=os.getenv("SECRET_KEY")
 
-app.config['MYSQL_HOST']='localhost'
-app.config['MYSQL_USER']='root'
-app.config['MYSQL_PASSWORD']='harshit1234'
-app.config['MYSQL_DB']='harshit_store'
-mysql=MySQL(app)
+app.config['MYSQL_HOST']='mysql-b71ebab-harshitjhszxc1234-2fec.k.aivencloud.com'
+app.config['MYSQL_USER']='avnadmin'
+app.config['MYSQL_PASSWORD']=os.getenv("MYSQL_PASSWORD")
+app.config['MYSQL_DB']='defaultdb'
+app.config['MYSQL_PORT']=11696
+app.config['MYSQL_SSL_DISABLED']=False
 
 @app.route('/',methods=['GET','POST'])
 def home():
