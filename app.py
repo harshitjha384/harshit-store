@@ -13,7 +13,7 @@ app.secret_key=os.getenv("SECRET_KEY")
 
 app.config['MYSQL_HOST']='mysql-b71ebab-harshitjhszxc1234-2fec.k.aivencloud.com'
 app.config['MYSQL_USER']='avnadmin'
-app.config['MYSQL_PASSWORD']=os.getenv("MYSQL_PASSWORD")
+app.config['MYSQL_PASSWORD']=os.getenv("MYSQL_PASSWORD1")
 app.config['MYSQL_DB']='defaultdb'
 app.config['MYSQL_PORT']=11696
 app.config['MYSQL_SSL_DISABLED']=False
