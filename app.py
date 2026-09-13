@@ -17,6 +17,7 @@ app.config['MYSQL_PASSWORD']=os.getenv("MYSQL_PASSWORD")
 app.config['MYSQL_DB']='defaultdb'
 app.config['MYSQL_PORT']=11696
 app.config['MYSQL_SSL_DISABLED']=False
+mysql=MySQL(app)
 
 @app.route('/',methods=['GET','POST'])
 def home():
